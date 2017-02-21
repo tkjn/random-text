@@ -17,32 +17,48 @@ class GenerateTextCommand extends Command
     {
         $this->setName('text:generate')
              ->setDescription('Generate text')
-             ->addArgument('grammar_file', InputArgument::REQUIRED, 'The file defining the available grammar. Currently JSON')
-             ->addArgument('type', InputArgument::REQUIRED, 'The type of text to generate from the grammar file');
+             ->addArgument(
+                 'grammar_file',
+                 InputArgument::REQUIRED,
+                 'The file defining the available grammar. Currently JSON'
+             )
+             ->addArgument('type', InputArgument::REQUIRED, 'The type of text to generate from the grammar file')
+             ->addArgument(
+                 'quantity',
+                 InputArgument::OPTIONAL,
+                 'The number of permutations to generate. Defaults to 1'
+             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $grammarFile = $input->getArgument('grammar_file');
         $type = $input->getArgument('type');
+        $quantity = $input->getArgument('quantity');
 
         Assert\that($grammarFile)->file();
+
+        if (!$quantity) {
+            $quantity = 1;
+        } else {
+            Assert\that($quantity)->integerish()->min(1);
+        }
 
         $random = new XorshiftStar();
 
         $jsonDecode = new JsonDecode(true);
         $grammar = $jsonDecode->decode(file_get_contents($grammarFile), JsonEncoder::FORMAT);
 
-        $word = $this->generateText($type, $grammar, $random);
-
-        $output->writeln($word);
+        for ($i = 0; $i < $quantity; $i++) {
+            $word = $this->generateText($type, $grammar, $random);
+            $output->writeln($word);
+        }
     }
 
     private function generateText(string $type, array $grammar, Random $random): string
     {
         $word = '';
-        foreach ($grammar[$type] as $part)
-        {
+        foreach ($grammar[$type] as $part) {
             $options = [];
             if (isset($part['vals'])) {
                 foreach ($part['vals'] as $val) {
