@@ -1,0 +1,25 @@
+{
+    "name": "tkjn/random-text",
+    "description": "Random text generation",
+    "authors": [
+        {
+            "name": "tkjn",
+            "email": "tkjn@tkjngine.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "beberlei/assert": "^2.7",
+        "tkjn/phprandom" : "^2.0",
+        "symfony/console": "^3.2",
+        "symfony/serializer": "^3.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tkjn\\RandomText\\": "src/"
+        }
+    }
+}

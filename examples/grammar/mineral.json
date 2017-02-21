@@ -1,0 +1,25 @@
+{
+    "mineral": [
+        {
+            "vals": ["Gal", "Mag", "Ger", "Ir", "Pyr", "Sep", "Ser",
+                "Zyg", "Xer", "Ur", "Bor", "Bir", "Gor", "Cy", "Stro"
+            ]
+        },
+        {
+            "refs": ["mineral-mid-end", "mineral-end"]
+        }
+    ],
+    "mineral-mid-end": [
+        {
+            "vals": ["nes", "l", "an", "el", "in", "sil", "nol"]
+        },
+        {
+            "refs": ["mineral-end"]
+        }
+    ],
+    "mineral-end": [
+        {
+            "vals": ["ium", "ite", "on", "ion", "itum", "a", "ide"]
+        }
+    ]
+}
