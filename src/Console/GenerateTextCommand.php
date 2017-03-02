@@ -2,8 +2,9 @@
 namespace Tkjn\RandomText\Console;
 
 use Assert;
-use Tkjn\Random\Integer\Random;
 use Tkjn\Random\Integer\XorshiftStar;
+use Tkjn\RandomText\Text\Generator;
+use Tkjn\RandomText\Text\Grammar;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,62 +48,14 @@ class GenerateTextCommand extends Command
         $random = new XorshiftStar();
 
         $jsonDecode = new JsonDecode(true);
-        $grammar = $jsonDecode->decode(file_get_contents($grammarFile), JsonEncoder::FORMAT);
+        $grammarData = $jsonDecode->decode(file_get_contents($grammarFile), JsonEncoder::FORMAT);
+
+        $grammar = new Grammar($grammarData);
+        $generator = new Generator($grammar, $random);
 
         for ($i = 0; $i < $quantity; $i++) {
-            $word = $this->generateText($type, $grammar, $random);
+            $word = $generator->generateText($type);
             $output->writeln($word);
         }
-    }
-
-    private function generateText(string $type, array $grammar, Random $random): string
-    {
-        $word = '';
-        foreach ($grammar[$type] as $part) {
-            $options = [];
-            if (isset($part['vals'])) {
-                foreach ($part['vals'] as $val) {
-                    $options[] = [
-                        'type' => 'val',
-                        'value' => $val,
-                    ];
-                }
-            }
-
-            if (isset($part['refs'])) {
-                foreach ($part['refs'] as $ref) {
-                    $options[] = [
-                        'type' => 'ref',
-                        'value' => $ref,
-                    ];
-                }
-            }
-
-            $option = $this->pickRandomEntry($options, $random);
-            if (null === $option) {
-                continue;
-            }
-
-            if ('ref' === $option['type']) {
-                $word .= $this->generateText($option['value'], $grammar, $random);
-            } else {
-                $word .= $option['value'];
-            }
-        }
-
-        return $word;
-    }
-
-    private function pickRandomEntry(array $entries, Random $random)
-    {
-        if (empty($entries)) {
-            return;
-        }
-
-        if (1 === count($entries)) {
-            return array_pop($entries);
-        }
-        $entry = $random->rand(0, count($entries) - 1);
-        return $entries[$entry];
     }
 }
