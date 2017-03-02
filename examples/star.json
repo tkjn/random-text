@@ -1,0 +1,87 @@
+{
+    "star": [
+        {
+            "refs": ["star-one-word", "star-one-word", "star-one-word", "star-two-word", "star-two-word", "star-three-word"]
+        }
+    ],
+    "star-one-word": [
+        {
+            "refs": ["star-word"]
+        }
+    ],
+    "star-two-word": [
+        {
+            "refs": ["star-word"]
+        },
+        {
+            "refs": ["star-extra-word"]
+        }
+    ],
+    "star-three-word": [
+        {
+            "refs": ["star-word"]
+        },
+        {
+            "refs": ["star-extra-word"]
+        },
+        {
+            "refs": ["star-extra-word"]
+        }
+    ],
+    "star-word": [
+        {
+            "refs": ["star-beginning"]
+        },
+        {
+            "vals": [""],
+            "refs": ["star-middle"]
+        },
+        {
+            "refs": ["star-end"]
+        }
+    ],
+    "star-beginning": [
+        {
+            "vals": ["Eri", "A", "An", "Sco", "Scor", "Cru", "Le", "Ca", "Can", "Tau",
+                "Ly", "Aqua", "Aqui", "Cyg", "Cor", "Ur", "Ceph", "Peg", "Aur", "Ge",
+                "Per", "Co", "Gru", "Sag", "Ori", "Hy", "Bor", "Dra", "Pis", "Ser"]
+        }
+    ],
+    "star-mid": [
+        {
+            "vals": ["nes", "li", "an", "el", "in", "sil", "nol", "dan", "dro", "me",
+                "pi", "ni", "e", "ga", "mi", "se", "lum", "it", "tar", "al",
+                "ce", "pen"]
+        }
+    ],
+    "star-middle": [
+        {
+            "vals": [""],
+            "refs": ["star-middle"]
+        },
+        {
+            "refs": ["star-mid"]
+        }
+    ],
+    "star-end": [
+        {
+            "vals": ["on", "ion", "itum", "a", "us", "da", "x", "o", "is", "rus",
+                "ra", "nus", "vus", "sa", "sus", "iga", "ni", "lon", "ba", "s",
+                "ius", "dra", "ona", "co", "la"]
+        }
+    ],
+    "star-more-words": [
+        {
+            "vals": [""],
+            "refs": ["star-extra-word"]
+        }
+    ],
+    "star-extra-word": [
+        {
+            "vals": [" "]
+        },
+        {
+            "refs": ["star-word"]
+        }
+    ]
+}
